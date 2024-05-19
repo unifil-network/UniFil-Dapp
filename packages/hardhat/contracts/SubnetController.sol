@@ -11,13 +11,13 @@ contract SubnetController {
         gateway = _gateway;
     }
 
-    function fund(SubnetID calldata subnetId, FvmAddress calldata to, uint256 amount) public {
+    function fund(SubnetID calldata subnetId, FvmAddress calldata to, uint256 amount) external {
         IGateway _gateway  = IGateway(gateway);
         _gateway.fundWithToken(subnetId, to, amount);
     }
 
-    function release(FvmAddress calldata to) public payable {
+    function release(FvmAddress calldata to) external payable {
         IGateway _gateway  = IGateway(gateway);
-        _gateway.release(to);
+        _gateway.release{value: msg.value}(to);
     }
 }
